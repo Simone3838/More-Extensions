@@ -2,7 +2,7 @@ const BlockType = require('../../extension-support/block-type');
 const ArgumentType = require('../../extension-support/argument-type');
 const TargetType = require('../../extension-support/target-type');
 
-class Scratch3YourExtension {
+class Scratch3StringsExtension {
 
     constructor (runtime) {
         // put any setup for your extension here
@@ -14,10 +14,10 @@ class Scratch3YourExtension {
     getInfo () {
         return {
             // unique ID for your extension
-            id: 'yourScratchExtension',
+            id: 'stringsExtension',
 
             // name that will be displayed in the Scratch UI
-            name: 'Demo',
+            name: 'Strings',
 
             // colours to use for your extension blocks
             color1: '#000099',
@@ -31,7 +31,7 @@ class Scratch3YourExtension {
             blocks: [
                 {
                     // name of the function where your block code lives
-                    opcode: 'myFirstBlock',
+                    opcode: 'concatenateStrings',
 
                     // type of block - choose from:
                     //   BlockType.REPORTER - returns a value, like "direction"
@@ -41,7 +41,7 @@ class Scratch3YourExtension {
                     blockType: BlockType.REPORTER,
 
                     // label to display on the block
-                    text: 'My first block [MY_NUMBER] and [MY_STRING]',
+                    text: 'concatenate [STRING1] and [STRING2]',
 
                     // true if this block should end a stack
                     terminal: false,
@@ -54,9 +54,9 @@ class Scratch3YourExtension {
 
                     // arguments used in the block
                     arguments: {
-                        MY_NUMBER: {
+                        STRING1: {
                             // default value before the user sets something
-                            defaultValue: 123,
+                            defaultValue: 'hello',
 
                             // type/shape of the parameter - choose from:
                             //     ArgumentType.ANGLE - numeric value with an angle picker
@@ -65,11 +65,11 @@ class Scratch3YourExtension {
                             //     ArgumentType.NUMBER - numeric value
                             //     ArgumentType.STRING - text value
                             //     ArgumentType.NOTE - midi music value with a piano picker
-                            type: ArgumentType.NUMBER
+                            type: ArgumentType.STRING
                         },
-                        MY_STRING: {
+                        STRING2: {
                             // default value before the user sets something
-                            defaultValue: 'hello',
+                            defaultValue: 'world',
 
                             // type/shape of the parameter - choose from:
                             //     ArgumentType.ANGLE - numeric value with an angle picker
@@ -86,15 +86,14 @@ class Scratch3YourExtension {
         };
     }
 
-
     /**
      * implementation of the block with the opcode that matches this name
      *  this will be called when the block is used
      */
-    myFirstBlock ({ MY_NUMBER, MY_STRING }) {
-        // example implementation to return a string
-        return MY_STRING + ' : doubled would be ' + (MY_NUMBER * 2);
+    concatenateStrings ({ STRING1, STRING2 }) {
+        // example implementation to return a concatenated string
+        return STRING1 + ' ' + STRING2;
     }
 }
 
-module.exports = Scratch3YourExtension;
+module.exports = Scratch3StringsExtension;
