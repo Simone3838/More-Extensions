@@ -30,54 +30,112 @@ class Scratch3StringsExtension {
             // your Scratch blocks
             blocks: [
                 {
-                    // name of the function where your block code lives
                     opcode: 'concatenateStrings',
-
-                    // type of block - choose from:
-                    //   BlockType.REPORTER - returns a value, like "direction"
-                    //   BlockType.BOOLEAN - same as REPORTER but returns a true/false value
-                    //   BlockType.COMMAND - a normal command block, like "move {} steps"
-                    //   BlockType.HAT - starts a stack if its value changes from false to true ("edge triggered")
                     blockType: BlockType.REPORTER,
-
-                    // label to display on the block
                     text: 'concatenate [STRING1] and [STRING2]',
-
-                    // true if this block should end a stack
                     terminal: false,
-
-                    // where this block should be available for code - choose from:
-                    //   TargetType.SPRITE - for code in sprites
-                    //   TargetType.STAGE  - for code on the stage / backdrop
-                    // remove one of these if this block doesn't apply to both
-                    filter: [ TargetType.SPRITE, TargetType.STAGE ],
-
-                    // arguments used in the block
+                    filter: [TargetType.SPRITE, TargetType.STAGE],
                     arguments: {
                         STRING1: {
-                            // default value before the user sets something
                             defaultValue: 'hello',
-
-                            // type/shape of the parameter - choose from:
-                            //     ArgumentType.ANGLE - numeric value with an angle picker
-                            //     ArgumentType.BOOLEAN - true/false value
-                            //     ArgumentType.COLOR - numeric value with a colour picker
-                            //     ArgumentType.NUMBER - numeric value
-                            //     ArgumentType.STRING - text value
-                            //     ArgumentType.NOTE - midi music value with a piano picker
                             type: ArgumentType.STRING
                         },
                         STRING2: {
-                            // default value before the user sets something
                             defaultValue: 'world',
-
-                            // type/shape of the parameter - choose from:
-                            //     ArgumentType.ANGLE - numeric value with an angle picker
-                            //     ArgumentType.BOOLEAN - true/false value
-                            //     ArgumentType.COLOR - numeric value with a colour picker
-                            //     ArgumentType.NUMBER - numeric value
-                            //     ArgumentType.STRING - text value
-                            //     ArgumentType.NOTE - midi music value with a piano picker
+                            type: ArgumentType.STRING
+                        }
+                    }
+                },
+                {
+                    opcode: 'lengthOfString',
+                    blockType: BlockType.REPORTER,
+                    text: 'length of [STRING]',
+                    terminal: false,
+                    filter: [TargetType.SPRITE, TargetType.STAGE],
+                    arguments: {
+                        STRING: {
+                            defaultValue: 'hello',
+                            type: ArgumentType.STRING
+                        }
+                    }
+                },
+                {
+                    opcode: 'characterAtPosition',
+                    blockType: BlockType.REPORTER,
+                    text: 'character at [POSITION] of [STRING]',
+                    terminal: false,
+                    filter: [TargetType.SPRITE, TargetType.STAGE],
+                    arguments: {
+                        STRING: {
+                            defaultValue: 'hello',
+                            type: ArgumentType.STRING
+                        },
+                        POSITION: {
+                            defaultValue: 1,
+                            type: ArgumentType.NUMBER
+                        }
+                    }
+                },
+                {
+                    opcode: 'substring',
+                    blockType: BlockType.REPORTER,
+                    text: 'substring of [STRING] from [START] to [END]',
+                    terminal: false,
+                    filter: [TargetType.SPRITE, TargetType.STAGE],
+                    arguments: {
+                        STRING: {
+                            defaultValue: 'hello world',
+                            type: ArgumentType.STRING
+                        },
+                        START: {
+                            defaultValue: 1,
+                            type: ArgumentType.NUMBER
+                        },
+                        END: {
+                            defaultValue: 5,
+                            type: ArgumentType.NUMBER
+                        }
+                    }
+                },
+                {
+                    opcode: 'convertToUpperCase',
+                    blockType: BlockType.REPORTER,
+                    text: 'convert [STRING] to uppercase',
+                    terminal: false,
+                    filter: [TargetType.SPRITE, TargetType.STAGE],
+                    arguments: {
+                        STRING: {
+                            defaultValue: 'hello',
+                            type: ArgumentType.STRING
+                        }
+                    }
+                },
+                {
+                    opcode: 'convertToLowerCase',
+                    blockType: BlockType.REPORTER,
+                    text: 'convert [STRING] to lowercase',
+                    terminal: false,
+                    filter: [TargetType.SPRITE, TargetType.STAGE],
+                    arguments: {
+                        STRING: {
+                            defaultValue: 'HELLO',
+                            type: ArgumentType.STRING
+                        }
+                    }
+                },
+                {
+                    opcode: 'containsSubstring',
+                    blockType: BlockType.BOOLEAN,
+                    text: '[STRING] contains [SUBSTRING]',
+                    terminal: false,
+                    filter: [TargetType.SPRITE, TargetType.STAGE],
+                    arguments: {
+                        STRING: {
+                            defaultValue: 'hello world',
+                            type: ArgumentType.STRING
+                        },
+                        SUBSTRING: {
+                            defaultValue: 'world',
                             type: ArgumentType.STRING
                         }
                     }
@@ -86,13 +144,32 @@ class Scratch3StringsExtension {
         };
     }
 
-    /**
-     * implementation of the block with the opcode that matches this name
-     *  this will be called when the block is used
-     */
     concatenateStrings ({ STRING1, STRING2 }) {
-        // example implementation to return a concatenated string
         return STRING1 + ' ' + STRING2;
+    }
+
+    lengthOfString ({ STRING }) {
+        return STRING.length;
+    }
+
+    characterAtPosition ({ STRING, POSITION }) {
+        return STRING.charAt(POSITION - 1);
+    }
+
+    substring ({ STRING, START, END }) {
+        return STRING.substring(START - 1, END);
+    }
+
+    convertToUpperCase ({ STRING }) {
+        return STRING.toUpperCase();
+    }
+
+    convertToLowerCase ({ STRING }) {
+        return STRING.toLowerCase();
+    }
+
+    containsSubstring ({ STRING, SUBSTRING }) {
+        return STRING.includes(SUBSTRING);
     }
 }
 
